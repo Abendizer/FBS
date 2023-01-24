@@ -8,7 +8,7 @@ public class Payment {
     //sample user accounts with their
     public static String[] sampleUserId = {"user01","user02","user03","user04","user05","user06","user07","user08","user09","user10"};
     public static String[] sampleUserPassword = {"password01","password02","password03","password04","password05","password06","password07","password08","password09","password10"};
-    public static double[] balance = {70,5063,620,200,7900,45450,30,37858,200000,5523};
+    public static double[] balance = {70,3000,620,200,7900,45450,30,37858,200000,5523};
     //A method for verifying the user payment
     public static boolean hasPayed(double price){
         Input input = new Input();
@@ -42,11 +42,6 @@ public class Payment {
         String password = input.insertStr();
         
         if(!password.equals(Payment.sampleUserPassword[index])){
-            // System.out.println("confirm by pressing 1 to pay or 0 to cancel\n1. Pay \n0. Cancel");
-            // int choise = Task.optionRange(0, 1);
-            // if(choise==1){
-            //     System.out.println("payment successful");
-            // }
             while(!password.equals(Payment.sampleUserPassword[index])){
                 System.out.println("wrong password please re-enter correctly");
                 password = input.insertStr();
@@ -61,8 +56,9 @@ public class Payment {
         else{
 
             System.out.println("confirm by pressing 1 to pay or 0 to cancel\n1. Pay \n0. Cancel");
-            int choise = Task.optionRange(0, 1);
-            if(choise==1){
+            int choice = Task.optionRange(0, 1);
+            if(choice==1){
+                Payment.balance[index] -= price;
                 System.out.println("payment successful");
                 return true;
             }

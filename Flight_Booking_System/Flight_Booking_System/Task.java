@@ -1,7 +1,4 @@
 package Flight_Booking_System;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.*;
 
 import Simple_Payment_API.Payment;
 public class Task {
@@ -152,12 +149,12 @@ public class Task {
         boolean isPaymentDone = Payment.hasPayed(price);
         if(isPaymentDone){
             Address address = new Address(country, city, email, phoneNumber);
-            Person ticketBuyer = new Person(firstName, lastName, age, sex, passportId, nationality, address);//created a person objects using the above input
+            Person passenger = new Person(firstName, lastName, age, sex, passportId, nationality, address);//created a person objects using the above input
             String ticketId = idGen();
             Location departure = new Location(departureCountry, departureCity);
             Location destination = new Location(destinationCountry, destinationCity);
             TimeInfo flightTime = new TimeInfo(takeOffTime, landingTime, totaFlightTime, currentTime);
-            Ticket ticket = new Ticket(ticketBuyer, ticketId, departure, destination, flightTime, isOneWay, price);
+            Ticket ticket = new Ticket(passenger, ticketId, departure, destination, flightTime, isOneWay, price);
             Ticket.decrementTicketLeft();
             return ticket;
         }

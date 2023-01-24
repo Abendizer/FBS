@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
 
-public class FileHandler {
-    static String idFileName = "/id.txt";
-    static String dataFileName = "/data.json";
-    static String foldrName = "/FBS";
-    static String parentPath = "/home/ab/Desktop";
-    static String idPath = parentPath+foldrName+idFileName;
-    static String dataPath = parentPath+foldrName+idFileName;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.core.type.TypeReference;
 
+public class FileHandler {
+    static String idPath = "FBSdata/id.txt";
+    static String dataPath = "FBSdata/data.json";
+    static String folderName = "FBSdata";
     class FileException extends IOException{
         public void folderCreateError(){
             System.out.println("Folder create error: the data couldn't be stored.\n But run time data access is still possible");
@@ -25,7 +26,7 @@ public class FileHandler {
     }
     static boolean createFolder(){
         try{
-            File file = new File(parentPath+foldrName);
+            File file = new File(folderName);
             if(file.exists()){
                 return true;
             }
@@ -42,11 +43,46 @@ public class FileHandler {
 //-------------data importer method-----------------------
     public static ArrayList<Ticket> importData(){
         ArrayList<Ticket> ticketList = new ArrayList<>();
-        return ticketList;
+        File dataFile = new File(dataPath);
+        if(!dataFile.exists()){
+            return ticketList;
+        }
+        else{
+            try {
+                ObjectMapper jsonMapper = new ObjectMapper();
+                ticketList = jsonMapper.readValue(dataFile, new TypeReference<ArrayList<Ticket>>(){});
+                return ticketList;
+            }
+            catch (StreamReadException e) {
+                System.out.println("Unable to read the data. The program will store the new data replacing the existing one...");
+                ticketList = new ArrayList<>();
+            }
+            catch (DatabindException e) {
+                System.out.println("previously stored data is messed up. The program will store the new data replacing the existing one...");
+                ticketList = new ArrayList<>();
+            }
+            catch (IOException e) {
+                System.out.println("Unable to read the stored data. The program will store the new data replacing the existing one...");
+                ticketList = new ArrayList<>();
+            }
+            return ticketList;
     }
+}
 //-------------data exporter method-----------------------
-    public static void exportData(ArrayList<Ticket> ticketList){
-
+    public static boolean exportData(ArrayList<Ticket> ticketList){
+        if(!createFolder()){
+            return false;
+        }
+        else{
+            ObjectMapper jsonMapper = new ObjectMapper();
+            File file = new File(dataPath);
+            try {
+                jsonMapper.writeValue(file, ticketList);
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        }
     }
 //-------------id exporter method-----------------------
     public static boolean exportId(int id){
@@ -91,7 +127,8 @@ public class FileHandler {
         File fileData = new File(dataPath);
         try{
             if((fileId.exists()==true&&fileData.exists()==false)||(fileId.exists()==false&&fileData.exists()==true)){
-                //just delete the data
+                System.out.println("A data has been deleted from the exported file");
+                //delete here
             }
             else if(fileId.exists()&&fileData.exists()){
                 try {
@@ -100,7 +137,7 @@ public class FileHandler {
                     while (reader.hasNextLine()) {
                       idStrForm+=reader.nextLine();
                     }
-                    int idIntForm = Integer.parseInt(idStrForm);
+                    int idIntForm = Integer.parseInt(idStrForm);// if failed here, the files is messed up so it should be deleted here
                     Task.setId(idIntForm);
                     reader.close();
                   } catch (FileNotFoundException e) {

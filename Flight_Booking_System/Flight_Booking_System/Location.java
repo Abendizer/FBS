@@ -13,6 +13,9 @@ public class Location {
                                     };
     public static final String[][] cityList = {{"Addis Ababa","Bahir Dar","Jimma"},{"Los Angeles","Washington DC","New York"},{"Toronto","Alberta","Calgari"},{"London","Manchester", "Black Pool"},{"Hobart","Darwin","Gold Cost"}};
 //constructor
+    public Location(){
+
+    }
     public Location(String country, String city){
         this.country = country;
         this.city = city;
@@ -36,6 +39,9 @@ class Address extends Location{
     private String email;
     private String phoneNumber;
 //constructor
+    public Address(){
+        
+    }
     public Address(String country, String city, String email, String phoneNumber) {
         super(country, city);
         this.email = email;

@@ -9,6 +9,9 @@ public class Person {
     private String nationality;
     private Address address;
     //constructor
+    public Person(){
+        
+    }
     public Person(String firstName, String lastName, int age, String sex, String passportId, String nationality, Address address){
         this.firstName = firstName;
         this.lastName = lastName;

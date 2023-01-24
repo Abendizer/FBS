@@ -6,9 +6,8 @@ public class Run {
 //method for options    
     public static void run(){
         Input input = new Input();
-        //FileHandler.idTracker();
-        //imported array list goes here
-        System.out.println("\n\t\t\t\t\t"+LocalDate.now()+"\n\n\t---[Flight] [Booking] [System]---\n");
+        FileHandler.idTracker();
+        System.out.println("\n\t\t\t\t\t\t"+LocalDate.now()+"\n\n\t---[Flight] [Booking] [System]---\n");
         System.out.println("\t\t1.Book A Flight\n\t\t2.See The Booking List");
         int x = input.insertInt();
         if(x==1){
@@ -24,8 +23,11 @@ public class Run {
                     System.out.println("Congrats, You Have Now Booked a Ticket\nYour ticket ID is FBS"+Task.getId());
                     ticketList.add(ticket);
                     System.out.println("added");
-//                    FileHandler.exportId(Task.getId());
-//                    FileHandler.exportData(ticketList);
+                    FileHandler.exportId(Task.getId());
+                    if(FileHandler.exportData(ticketList)){System.out.println("The data has been saved successfully");}
+                    else{
+                        System.out.println("Unable to save the data on disk!");
+                    }
                     //write id to file here
                     //write data to file here
                     System.out.println("do you want to see the full detail of your ticket?\n1. Yes\n2. No");
@@ -51,9 +53,7 @@ public class Run {
             }
             if(!ticketList.isEmpty()){
                 ticketList.forEach((aTicket) -> {
-                    System.out.println("\n\n");
                     System.out.println(aTicket.toString());
-                    System.out.println("__________________________________________________________");
                 });
             }
             else{

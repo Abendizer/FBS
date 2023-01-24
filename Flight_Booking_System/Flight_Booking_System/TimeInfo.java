@@ -11,7 +11,8 @@ public class TimeInfo {
 
     private static final double avgSpeedOfPlaneInKPH = 850;//to calculate the total flight time
     private static LocalDateTime takeOff;
-
+    TimeInfo(){
+    }
     TimeInfo(String takeOffTime, String landingTime, String totalFlightTime, String bookingTime){
         this.takeOffTime = takeOffTime;
         this.landingTime = landingTime;

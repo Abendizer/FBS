@@ -27,7 +27,7 @@ public class Ticket{
     }    
 //instance methods
     //getters
-    public Person getTciketBuyer(){
+    public Person getPassenger(){
         return passenger;
     }
     public String getTicketId(){
@@ -39,10 +39,10 @@ public class Ticket{
     public Location getDestination(){
         return destination;
     }
-    public TimeInfo getTotalFlightTime(){
+    public TimeInfo getFlightTime(){
         return flightTime;
     }
-    public boolean isOneWay(){
+    public boolean getIsOneWay(){
         return isOneWay;
     }
     public double getPrice(){
@@ -57,10 +57,11 @@ public class Ticket{
         }
         fromTo = "\n\n#"+oneOrTwoWay+"A One-Way Flight from "+departure.getCity()+", "+departure.getCountry()+" to "+destination.getCity()+", "+destination.getCountry();
         String takeOffTime = "\nFlight Take-off time: "+flightTime.getTakeOffTime();
-        String bookingTime = "\n\t\tBooked at: "+flightTime.getBookingTime();
-        String airLine = "\n\n//-----------"+Ticket.airLineName+"-----------//";
+        String bookingTime = "\n\n\t\tBooked at: "+flightTime.getBookingTime();
+        String airLine = "\n\n//----------------------"+Ticket.airLineName+"----------------------//";
         String tickId = "\n\n\t#Ticket Id:"+ticketId+"\n";
-        String formattedInfo = bookingTime+airLine+fromTo+name+takeOffTime+tickId;
+        String lastLine = "\n__________________________________________________________\n";
+        String formattedInfo = bookingTime+airLine+fromTo+name+takeOffTime+tickId+lastLine;
         return formattedInfo;
     }
     public static int getTicketsLeft(){
