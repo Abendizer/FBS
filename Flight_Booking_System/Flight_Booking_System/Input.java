@@ -5,19 +5,12 @@ public  class Input{
     Scanner input = new Scanner(System.in);
     public int insertInt(){
         System.out.print(">>");
-        int num=0;
-        boolean isInt = false;
-        do{
-            if(input.hasNextInt()){
-                num = input.nextInt();
-                isInt=true;
-            }
-            else{
-                System.out.print("Enter only an integer\n>>");
-                input.nextLine();
-            }
-        }while(!isInt);
-        return num; 
+        Scanner input= new Scanner(System.in);
+        while(!input.hasNextInt()){
+            System.out.println("Please enter an Integer only.");
+            input.next();
+        }
+        return input.nextInt();
     }
     public int insertAge(){
         int age = insertInt();
@@ -82,7 +75,7 @@ public  class Input{
         String str = input.next();
         if(!str.matches("^[a-z0-9]+@[a-z]+\\.[a-z]+$")){
             while(!str.matches("^[a-z0-9]+@[a-z]+\\.[a-z]+$")){
-                System.out.println("Thats not the correct email format.(use small letters and the correct symbols)");
+                System.out.println("That's not the correct email format.(use small letters and the correct symbols)");
                 str=input.next();
             }
         }
@@ -102,6 +95,6 @@ public  class Input{
     public static void insertEnter(){
         Scanner inp = new Scanner(System.in);
         System.out.println("Press  any key and then Enter to continue...");
-               inp.next();
+        inp.next();
     } 
 }

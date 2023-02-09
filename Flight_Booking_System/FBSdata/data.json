@@ -1,0 +1,34 @@
+[ {
+  "passenger" : {
+    "type" : "LocalPassenger",
+    "firstName" : "sdfs",
+    "lastName" : "sfs",
+    "age" : 43,
+    "sex" : "Female",
+    "address" : {
+      "country" : "CANADA",
+      "city" : "Montreal",
+      "email" : "dsfs@sdas.sf",
+      "phoneNumber" : "+2424242"
+    }
+  },
+  "ticketId" : "FBS101",
+  "departure" : {
+    "country" : "USA",
+    "city" : "New York"
+  },
+  "destination" : {
+    "country" : "USA",
+    "city" : "Washington DC"
+  },
+  "flightTime" : {
+    "takeOffTime" : "Sat, 11 Feb 2023 11:30 AM",
+    "landingTime" : "Sat, 11 Feb 2023 11:30 AM",
+    "totalFlightTime" : "0 Hours",
+    "bookingTime" : "Thu, 09 Feb 2023 03:01 AM"
+  },
+  "isOneWay" : true,
+  "isLocal" : true,
+  "price" : 26.240000000000002,
+  "airLine" : "Ethiopian Airlines"
+} ]

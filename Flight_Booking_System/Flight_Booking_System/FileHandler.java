@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.Scanner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,6 +41,19 @@ public class FileHandler {
         }
             catch(Exception e){ return false; }
     }
+    static void deleteFolder(){
+        File toBeDeleted = new File(folderName);
+        if(toBeDeleted.exists()){
+            File file1 = new File(dataPath);
+            File file2 = new File(idPath);
+            if(file1.exists()){
+                file1.delete();
+            }
+            if(file2.exists()){
+                file2.delete();
+            }
+        }
+    }
 //-------------data importer method-----------------------
     public static ArrayList<Ticket> importData(){
         ArrayList<Ticket> ticketList = new ArrayList<>();
@@ -59,6 +73,7 @@ public class FileHandler {
             }
             catch (DatabindException e) {
                 System.out.println("previously stored data is messed up. The program will store the new data replacing the existing one...");
+                e.printStackTrace();
                 ticketList = new ArrayList<>();
             }
             catch (IOException e) {
@@ -75,6 +90,7 @@ public class FileHandler {
         }
         else{
             ObjectMapper jsonMapper = new ObjectMapper();
+            jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
             File file = new File(dataPath);
             try {
                 jsonMapper.writeValue(file, ticketList);
@@ -86,10 +102,7 @@ public class FileHandler {
     }
 //-------------id exporter method-----------------------
     public static boolean exportId(int id){
-        if(!createFolder()){
-            return false;
-        }
-        else{
+        if(createFolder()) {
             File file = new File(idPath);
             try{
                 if(file.exists()){
@@ -105,30 +118,31 @@ public class FileHandler {
                 }
                 else{
                     if(file.createNewFile()){
-                        exportId(id);
+                        return exportId(id);
                     }
                     else{
-                        System.out.println("unable to store the data due to file access persmission,\nthe data will only be stored on the ram temporarly.");
+                        System.out.println("unable to store the data due to file access permission,\nthe data will only be stored on the ram temporarily.");
                         return false;
                     }
                 }
             }catch(IOException e){
-                System.out.println("Unknown problem occured when storing the data.\nbut you still can access the data on this runtime");
+                System.out.println("Unknown problem occurred when storing the data.\nbut you still can access the data on this runtime");
                 return false;
             }
-            System.out.println("error storing file data");
+        }
+        else{
             return false;
         }
     }
-//-------------tracks the status of the id changes it when necessacy, usefull to track all the datas too-----------------------
+//-------------tracks the status of the id changes it when necessary, useful to track all the data too-----------------------
     public static void idTracker(){
-        // the program must work only if both data file and id tracker exist.. so the existance of the two files is checked
+        // the program must work only if both data file and id tracker exist.. so the existence of the two files is checked
         File fileId = new File(idPath);
         File fileData = new File(dataPath);
         try{
             if((fileId.exists()==true&&fileData.exists()==false)||(fileId.exists()==false&&fileData.exists()==true)){
-                System.out.println("A data has been deleted from the exported file");
-                //delete here
+                System.out.println("Some data missing. Recreating the file ...");
+                fileData.delete();//
             }
             else if(fileId.exists()&&fileData.exists()){
                 try {

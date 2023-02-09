@@ -13,7 +13,7 @@ public class Payment {
     public static boolean hasPayed(double price){
         Input input = new Input();
         System.out.println("\t---Payment API---\n\t-----------------\n");
-        System.out.println("Enter your user ID for this payment system");
+        System.out.println("Enter your user ID for this payment system(try sth like \"user01\" or \"user02\")");
         String userId = input.insertStr();
         int index = 0;
         boolean found = false;
@@ -38,7 +38,7 @@ public class Payment {
                 
             }
         }
-        System.out.println("Enter a password for the account you entered");
+        System.out.println("Enter a password for the account you entered(try sth like \"password01\" or \"password02\" based the user account");
         String password = input.insertStr();
         
         if(!password.equals(Payment.sampleUserPassword[index])){
